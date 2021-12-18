@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { insertData } from '@lib/app';
 
 /* エラーテキスト */
 const ErrorText = () => (
@@ -36,6 +37,9 @@ export default () => {
   return (
     <div className="App">
       <p>Geolocation API Sample</p>
+      <button onClick={insertData}>
+        add data
+      </button>
       {!isFirstRef && !isAvailable && <ErrorText />}
       {isAvailable && (
         <div>
