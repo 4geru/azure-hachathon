@@ -41,9 +41,9 @@ export default () => {
         <div>
           <button onClick={getCurrentPosition}>Get Current Position</button>
           <div>
-            latitude: {position.latitude}
+            latitude(緯度): {position.latitude}
             <br />
-            longitude: {position.longitude}
+            longitude(経度): {position.longitude}
           </div>
         </div>
       )}
