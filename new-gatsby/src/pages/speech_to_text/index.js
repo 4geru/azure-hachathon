@@ -1,7 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React from 'react';
-import App from '../../components/speeckToText/App';
-import ReactDOM from 'react-dom';
+import { SpeechInput } from '@components/speeckToText/SpeechInput';
 
 // styles
 const pageStyles = {
@@ -14,7 +13,7 @@ const IndexPage = () => {
   return (
     <main style={pageStyles}>
       <title>Home Page</title>
-        <App />
+        <SpeechInput />
     </main>
   )
 }
