@@ -1,5 +1,6 @@
 import * as React from "react"
-import { main } from '@lib/cosmoDb'
+import { useState, useEffect } from "react"
+import { main, read } from '@lib/cosmoDb'
 
 // styles
 const pageStyles = {
@@ -10,12 +11,17 @@ const pageStyles = {
 
 // markup
 const IndexPage = () => {
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    const {items} = read();
+    debugger
+    setItems(items)
+  }, [items])
+
   return (
     <main style={pageStyles}>
       <title>Home Page</title>
-      <button onClick={main}>
-        hoge
-      </button>
+      hoge
     </main>
   )
 }

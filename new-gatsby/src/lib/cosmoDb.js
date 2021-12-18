@@ -120,3 +120,33 @@ export const main = async () => {
     console.log(err.message);
   }
 }
+
+
+export const read = async () => {
+  
+  // <CreateClientObjectDatabaseContainer>
+  const { endpoint, key, databaseId, containerId } = config;
+
+  const client = new CosmosClient({ endpoint, key });
+
+  const database = client.database(databaseId);
+  const container = database.container(containerId);
+
+  await dbContextCreate(client, databaseId, containerId);
+  try {
+    console.log(`Querying container: Items`);
+
+    const querySpec = {
+      query: "SELECT * from c"
+    };
+    
+    const { resources: items } = await container.items
+      .query(querySpec)
+      .fetchAll();
+      debugger;
+    return {items};
+    
+  } catch (err) {
+    console.log(err.message);
+  }
+}
