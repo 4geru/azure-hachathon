@@ -77,7 +77,7 @@ export const main = async () => {
       .fetchAll();
 
     items.forEach(item => {
-      console.log(`${item.id} - ${item.description}`);
+      console.log(`${item.id} - ${item.Name}`);
     });
     // </QueryItems>
     

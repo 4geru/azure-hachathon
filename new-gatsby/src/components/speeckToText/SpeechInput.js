@@ -2,10 +2,13 @@ import *  as React from "react"
 import { Container } from 'reactstrap';
 import { useSpeechInput } from "./hook";
 import { useEffect } from 'react'
+import { readToEmotionContainer } from '@lib/emotionContainer';
+
 
 
 export const SpeechInput = () => {
     const { displayText, callback } = useSpeechInput()
+    readToEmotionContainer()
     useEffect(() => {
         // TODO
     }, [displayText])

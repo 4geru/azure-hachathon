@@ -50,6 +50,26 @@ const dbContextCreate = async (client, databaseId, containerId) => {
 // }
 //  </DefineNewItem>
 
+export const readToEmotionContainer = async () => {
+  const { endpoint, key, databaseId, containerId } = config;
+
+  const client = new CosmosClient({ endpoint, key });
+
+  const database = client.database(databaseId);
+  const container = database.container(containerId);
+  const querySpec = {
+    query: "SELECT * from c"
+  };
+
+  // read all items in the Items container
+  const { resources: items } = await container.items
+    .query(querySpec)
+    .fetchAll();
+  items.forEach(item => {
+    console.log(`${item.id} - ${item.DocumentText}`);
+  });
+}
+
 export const writeToEmotionContainer = async (newItem) => {
   // <CreateClientObjectDatabaseContainer>
   const { endpoint, key, databaseId, containerId } = config;
