@@ -1,6 +1,7 @@
 import * as React from "react"
 import {AzureMap, AzureMapsProvider, AzureMapPopup} from 'react-azure-maps'
 import {AuthenticationType} from 'azure-maps-control'
+import styled from 'styled-components'
 
 const option = {
   authOptions: {
@@ -11,37 +12,66 @@ const option = {
   zoom: 10,
 }
 
-const heart = {
-  width: "100px",  /* 正方形を作る */
-  height: "100px", /* 正方形を作る */
-  position: "relative"/* 基準位置とする */
-  // .heart::before,
-// .heart::after {
-//   content: "";  /* 疑似要素に必須 */
-//   width: 50%;   /* ハートの丸い部分の大きさにかかわる */
-//   height: 80%;  /* ハートの高さにかかわる */
-//   background: #E0548E; /* ハートの色 */
-//   border-radius: 25px 25px 0 0; /* ハートの半円を生成 */
-//   display: block; /* ブロック要素にする */
-//   position: absolute; /* 相対位置に指定 */
-// }
+// ref: https://qiita.com/7note/items/3b640d031e83f82a81c1
+const Heart = styled.div`
+  width: 100px;
+  height: 100px;
+  position: relative;
+
+  &::before,
+  &::after {
+    content: "";
+    width: 50%;
+    height: 80%;
+    background: #E0548E;
+    border-radius: 25px 25px 0 0;
+    display: block;
+    position: absolute;
+  }
+  &::before {
+    transform: rotate(-45deg);
+    left: 14%;
+  }
+  &::after {
+    transform: rotate(45deg);
+    right: 14%;
+  }
+`
+const StyledAzureMapPopup = styled(AzureMapPopup)`
+> .popup-content-container {
+  box-shadow: none !important;
 }
-
-// .heart::before {
-//   transform: rotate(-45deg); /* 左に回転 */
-//   left: 14%;                 /* 左からの位置を指定 */
-// }
-// .heart::after {
-//   transform: rotate(45deg);  /* 右に回転 */
-//   right: 14%;                /* 右からの位置を指定 */
-// }
-
+`
 // styles
 const pageStyles = {
   color: "#232129",
   padding: 96,
   fontFamily: "-apple-system, Roboto, sans-serif, serif",
 }
+const Marker = ({lat, lon}) => {
+  return (
+    <StyledAzureMapPopup
+      isVisible={true}
+      boxShadow={'none'}
+      options={{
+        position: [lat, lon],
+        closeButton: false,
+        fillColor: 'transparent',
+        boxShadow: 'none',
+        style:{
+          boxShadow: 'none'
+        }
+      }}
+      popupContent={
+        <Heart />
+      }
+      style={{
+        boxShadow: 'none'
+      }}
+    />  
+  )
+}
+
 // markup
 const IndexPage = () => {
   return (
@@ -50,18 +80,8 @@ const IndexPage = () => {
       <AzureMapsProvider>
         <div style={{ height: '600px', width: "800px" }}>
           <AzureMap options={option}>
-
-            <AzureMapPopup
-              isVisible={true}
-              options={{
-                // ...popupOptions,
-                position: [139.7005319, 35.6048821],
-                // pixelOffset: [0, -18],
-              }}
-              popupContent={
-                <div style={heart}></div>
-              }
-            />  
+            <Marker lat={139.7005319} lon={35.6048821} />
+            <Marker lat={139.8005319} lon={35.6048821} />
           </AzureMap>
         </div>
       </AzureMapsProvider>
