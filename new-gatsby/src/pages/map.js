@@ -14,8 +14,8 @@ const option = {
 
 // ref: https://qiita.com/7note/items/3b640d031e83f82a81c1
 const Heart = styled.div`
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
   position: relative;
 
   &::before,
@@ -23,7 +23,7 @@ const Heart = styled.div`
     content: "";
     width: 50%;
     height: 80%;
-    background: #E0548E;
+    background: ${props => props.isPositive ? '#E0548E' : '#5dadec'};
     border-radius: 25px 25px 0 0;
     display: block;
     position: absolute;
@@ -48,7 +48,7 @@ const pageStyles = {
   padding: 96,
   fontFamily: "-apple-system, Roboto, sans-serif, serif",
 }
-const Marker = ({lat, lon}) => {
+const Marker = ({lat, lon, isPositive}) => {
   return (
     <StyledAzureMapPopup
       isVisible={true}
@@ -63,7 +63,7 @@ const Marker = ({lat, lon}) => {
         }
       }}
       popupContent={
-        <Heart />
+        <Heart isPositive={isPositive} />
       }
       style={{
         boxShadow: 'none'
@@ -80,8 +80,8 @@ const IndexPage = () => {
       <AzureMapsProvider>
         <div style={{ height: '600px', width: "800px" }}>
           <AzureMap options={option}>
-            <Marker lat={139.7005319} lon={35.6048821} />
-            <Marker lat={139.8005319} lon={35.6048821} />
+            <Marker lat={139.7005319} lon={35.6048821} isPositive={true} />
+            <Marker lat={139.8005319} lon={35.6048821} isPositive={false} />
           </AzureMap>
         </div>
       </AzureMapsProvider>
