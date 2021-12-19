@@ -2,10 +2,13 @@ import *  as React from "react"
 import { Container } from 'reactstrap';
 import { useSpeechInput } from "./hook";
 import { useEffect } from 'react'
+import { readToEmotionContainer } from '@lib/emotionContainer';
+
 
 
 export const SpeechInput = () => {
-    const { displayText, sttFromMic } = useSpeechInput()
+    const { displayText, callback } = useSpeechInput()
+    readToEmotionContainer()
     useEffect(() => {
         // TODO
     }, [displayText])
@@ -15,8 +18,7 @@ export const SpeechInput = () => {
             <h1 className="display-4 mb-3">Speech sample app</h1>
             <div className="row main-container">
                 <div className="col-6">
-                    <i className="fas fa-microphone fa-lg mr-2" onClick={() => sttFromMic()}></i>
-                    <button onClick={() => sttFromMic()}>
+                    <button onClick={() => callback()}>
                         mew
                     </button>
                     Convert speech to text from your mic.
