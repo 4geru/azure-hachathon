@@ -2,6 +2,8 @@ import * as React from "react"
 import {AzureMap, AzureMapsProvider, AzureMapPopup} from 'react-azure-maps'
 import {AuthenticationType} from 'azure-maps-control'
 import styled from 'styled-components'
+import { readToEmotionContainer } from '@lib/emotionContainer'
+import { useState, useEffect } from 'react'
 
 const option = {
   authOptions: {
@@ -14,8 +16,8 @@ const option = {
 
 // ref: https://qiita.com/7note/items/3b640d031e83f82a81c1
 const Heart = styled.div`
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   position: relative;
 
   &::before,
@@ -48,7 +50,9 @@ const pageStyles = {
   padding: 96,
   fontFamily: "-apple-system, Roboto, sans-serif, serif",
 }
-const Marker = ({lat, lon, isPositive}) => {
+
+const Marker = ({lat, lon, isPositive, doc}) => {
+  console.log(lat, lon, isPositive, doc);
   return (
     <StyledAzureMapPopup
       isVisible={true}
@@ -74,14 +78,35 @@ const Marker = ({lat, lon, isPositive}) => {
 
 // markup
 const IndexPage = () => {
+  const [markers, setMarkers] = useState(undefined);
+  useEffect(async () => {
+    const items = await readToEmotionContainer()
+    const newMakers = items.map(item => {
+      return (<Marker lat={item.Lng} lon={item.Lat} isPositive={item.OverallSentiment!="negative"} doc={item.DocumentText}/>)
+    })
+    setMarkers(newMakers)
+  }, []);
+
   return (
     <main style={pageStyles}>
       <title>Home Page</title>
+      <div>
+        {/* <button onClick={setlatlon}>readEmotion</button> */}
+        {/* <div>
+          latitude(緯度): {position.latitude}
+          <br />
+          longitude(経度): {position.longitude}
+        </div> */}
+      </div>
+
       <AzureMapsProvider>
         <div style={{ height: '600px', width: "800px" }}>
           <AzureMap options={option}>
-            <Marker lat={139.7005319} lon={35.6048821} isPositive={true} />
-            <Marker lat={139.8005319} lon={35.6048821} isPositive={false} />
+            {/* <Marker lat={139.7005319} lon={35.6048821} isPositive={true} />
+            <Marker lat={139.8005319} lon={35.6048821} isPositive={false} /> */}
+            {
+              markers
+            }
           </AzureMap>
         </div>
       </AzureMapsProvider>

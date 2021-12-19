@@ -65,9 +65,10 @@ export const readToEmotionContainer = async () => {
   const { resources: items } = await container.items
     .query(querySpec)
     .fetchAll();
-  items.forEach(item => {
-    console.log(`${item.id} - ${item.DocumentText}`);
-  });
+  // items.forEach(item => {
+  //   console.log(`${item.id} - ${item.DocumentText} - ${item.Lat} - ${item.Lng} - ${item.OverallSentiment}`);
+  // });
+  return items;
 }
 
 export const writeToEmotionContainer = async (newItem) => {
