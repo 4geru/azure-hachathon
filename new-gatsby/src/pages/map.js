@@ -4,6 +4,7 @@ import {AuthenticationType} from 'azure-maps-control'
 import styled from 'styled-components'
 import { readToEmotionContainer } from '@lib/emotionContainer'
 import { useState, useEffect } from 'react'
+import { Link } from "gatsby"
 
 const option = {
   authOptions: {
@@ -47,7 +48,7 @@ const StyledAzureMapPopup = styled(AzureMapPopup)`
 // styles
 const pageStyles = {
   color: "#232129",
-  padding: 96,
+  padding: 0,
   fontFamily: "-apple-system, Roboto, sans-serif, serif",
 }
 
@@ -89,7 +90,6 @@ const IndexPage = () => {
 
   return (
     <main style={pageStyles}>
-      <title>Home Page</title>
       <div>
         {/* <button onClick={setlatlon}>readEmotion</button> */}
         {/* <div>
@@ -100,16 +100,22 @@ const IndexPage = () => {
       </div>
 
       <AzureMapsProvider>
-        <div style={{ height: '600px', width: "800px" }}>
+        <div style={{ height: '600px', width: "100%" }}>
           <AzureMap options={option}>
-            {/* <Marker lat={139.7005319} lon={35.6048821} isPositive={true} />
-            <Marker lat={139.8005319} lon={35.6048821} isPositive={false} /> */}
             {
               markers
             }
           </AzureMap>
         </div>
       </AzureMapsProvider>
+      <div class="container h-100">
+        <div class="row align-items-end h-25" style={{margin: "10px"}}>
+          <Link to="/speech_to_text" style={{backgroundColor: '#FAFDC5', color: 'black'}} className='btn button button--link me-2' role="button">
+              さあ！<br />
+              会話を始めよう
+          </Link>
+        </div>
+      </div>
     </main>
   )
 }
