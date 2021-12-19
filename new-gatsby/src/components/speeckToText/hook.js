@@ -38,8 +38,9 @@ export const useSpeechInput = () => {
   const [isAvailable, setAvailable] = useState(false);
   const [position, setPosition] = useState(undefined);
   const [feeling, setFeeling] = useState(undefined);
-  const [displayText, setDisplayText] = useState('INITIALIZED: ready to test speech...');
+  const [displayText, setDisplayText] = useState(undefined);
   const [authToken, setAuthToken] = useState(undefined);
+  const [speechStatus, setSpeechStatus]  = useState('initialize')
   const speechKey = 'b326dbf6a7e84c939627258908fff724'
   const region='japaneast'
 
@@ -96,16 +97,15 @@ export const useSpeechInput = () => {
       // DBに登録した場合は初期化して、次のインプットに備える
       setPosition(undefined);
       setFeeling(undefined);
+      setSpeechStatus('finished')
     }
   }, [position, feeling]);
 
   const callback = async() => {
+    setSpeechStatus('loading')
     getCurrentPosition(setPosition);
     sttFromMic();
-    // const text = '昨日ね聞いてよ硫酸嫌だよね。やっぱり人の前で喋るのは嫌だよね。いや、無理無理だって発表とか怖いもん恥ずかしいはもう離婚したしさ最悪、アメリカコロナもさあじゃまだしもマスクも邪魔やだ。やりたくないもうお腹痛い眠たい帰りたい。離婚しちゃったんだよね。'
-    // setDisplayText(text)
-    // const feelingObject = sentimentAnalysisWithOpinionMining(text, setFeeling);
   }
 
-  return { callback, displayText }
+  return { callback, displayText, speechStatus }
 };
